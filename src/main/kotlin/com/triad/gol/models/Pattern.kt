@@ -12,7 +12,7 @@ class Pattern(name: String, width: Int, height: Int, val flip: Boolean, pattern:
     val widthProperty = SimpleIntegerProperty(width)
     var width by widthProperty
     val heightProperty = SimpleIntegerProperty(height)
-    var height by widthProperty
+    var height by heightProperty
 
     var pattern = FXCollections.observableArrayList(pattern)
 
