@@ -1,6 +1,7 @@
 package com.triad.gol.views
 
 import com.triad.gol.controllers.GameController
+import com.triad.gol.models.Map
 import javafx.application.Platform
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Pos
@@ -72,7 +73,7 @@ class MainMenuView : View("Triad - Game of Life") {
 
                     enableWhen(model.valid)
                     action {
-                        gameController.clear(model.width.value.toInt(), model.height.value.toInt())
+                        gameController.map = Map(model.width.value.toInt(), model.height.value.toInt())
                         replaceWith<GameView>()
                     }
                 }

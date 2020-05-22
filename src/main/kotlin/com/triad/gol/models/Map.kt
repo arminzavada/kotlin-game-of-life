@@ -39,4 +39,10 @@ class Map(val width: Int, val height: Int) {
             cells[index].isAlive = value
         }
     }
+
+    fun clear() {
+        cells.forEach {
+            it.isAlive = false
+        }
+    }
 }

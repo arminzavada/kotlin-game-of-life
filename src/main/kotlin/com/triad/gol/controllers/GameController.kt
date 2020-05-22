@@ -9,19 +9,21 @@ import javafx.collections.FXCollections
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import tornadofx.Controller
-import tornadofx.getValue
-import tornadofx.onChange
-import tornadofx.setValue
+import tornadofx.*
 
 class GameController : Controller() {
-    private lateinit var map: Map
+    var map: Map = Map(5, 5)
+        set(value) {
+            cells.clear()
+            cells.addAll(value.cells)
 
-    val widthProperty = SimpleIntegerProperty()
-    var width by widthProperty
+            field = value
+        }
 
-    val heightProperty = SimpleIntegerProperty()
-    var height by heightProperty
+    val width
+        get() = map.width
+    val height
+        get() = map.height
 
     val speedPropety = SimpleIntegerProperty(800)
     var speed by speedPropety
@@ -49,13 +51,8 @@ class GameController : Controller() {
         isPausedProperty.bind(isRunningProperty.not()) // I had to add the isPausedProperty, because isRunningProperty.not() did not return a valid observable property. It might be a bug, I don't know.
     }
 
-    fun clear(width: Int, height: Int) {
-        this.width = width
-        this.height = height
-        map = Map(width, height)
-
-        cells.clear()
-        cells.addAll(map.cells)
+    fun clear() {
+        map.clear()
     }
 
     fun step() {

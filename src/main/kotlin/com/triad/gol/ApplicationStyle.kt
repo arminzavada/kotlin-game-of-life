@@ -2,6 +2,7 @@ package com.triad.gol
 
 import javafx.geometry.Pos
 import javafx.scene.effect.DropShadow
+import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class ApplicationStyle : Stylesheet() {
@@ -20,9 +21,6 @@ class ApplicationStyle : Stylesheet() {
     }
 
     init {
-        cellGridContainer {
-            backgroundColor += c("#7f7f7f")
-        }
         cellGrid {
             cellWidth = 20.px
             cellHeight = 20.px
@@ -30,44 +28,44 @@ class ApplicationStyle : Stylesheet() {
             horizontalCellSpacing = 1.px
         }
         cellClass {
-            backgroundColor += c("#555")
+            backgroundColor += c("#cccccc")
         }
         aliveCellClass {
-            backgroundColor += c("#333")
+            backgroundColor += c("#0093ff")
         }
         title {
             fontSize = 2.em
-            textFill = c(175, 47, 47, 0.5)
+            fontWeight = FontWeight.BOLD
+            textFill = c("#0093ff")
             padding = box(0.px, 0.px, 10.px, 0.px)
+            alignment = Pos.CENTER
         }
         iconButton {
             backgroundColor += c("transparent")
 
-            and(hover) {
-                icon {
-                    fill = c("#af5b5e")
-                }
-            }
-
             and(pressed) {
                 icon {
-                    fill = c("#af2483")
+                    fill = c("#0093ff")
                 }
             }
 
             and(selected) {
                 icon {
-                    fill = c("#af2483")
+                    fill = c("#0093ff")
                 }
+            }
+
+            and(hover) {
+                backgroundColor += c("#00000011")
             }
         }
         icon {
-            fill = c("#cc9a9a")
+            fill = c("#8f8f8f")
         }
         controlPanel {
-            backgroundColor += c("#d3d3d3")
+            backgroundColor += c("#d0d0d0")
             effect = DropShadow(10.0, c("#000000"))
-            prefWidth = 200.px
+            prefWidth = 250.px
             padding = box(10.px)
             spacing = 10.px
 

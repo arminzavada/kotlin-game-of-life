@@ -15,26 +15,37 @@ class PlayController : View("My View") {
 
         label("Game Of Life").setId(ApplicationStyle.title)
 
-        slider(100..1000) {
-            this.valueProperty().bindBidirectional(gameController.speedPropety)
+        hbox {
+            label("Speed: ")
+            slider(50..1000) {
+                valueProperty().bindBidirectional(gameController.speedPropety)
+            }
         }
 
         hbox {
             addClass(ApplicationStyle.controlPanelButtonsContainer)
 
+            iconButton(FontAwesomeIcon.ERASER) {
+                action {
+                    gameController.isRunning = false
+                    gameController.clear()
+                }
+                tooltip("Clear map")
+            }
             iconButton(FontAwesomeIcon.STEP_FORWARD) {
                 action {
                     gameController.isRunning = false
                     gameController.step()
                 }
+                tooltip("Step")
             }
-            iconButton(FontAwesomeIcon.ERASER)
             iconButton(FontAwesomeIcon.PAUSE) {
                 toggleClass(Stylesheet.selected, gameController.isPausedProperty)
 
                 action {
                     gameController.isRunning = false
                 }
+                tooltip("Pause")
             }
             iconButton(FontAwesomeIcon.PLAY) {
                 toggleClass(Stylesheet.selected, gameController.isRunningProperty)
@@ -42,6 +53,7 @@ class PlayController : View("My View") {
                 action {
                     gameController.isRunning = true
                 }
+                tooltip("Play")
             }
         }
     }
