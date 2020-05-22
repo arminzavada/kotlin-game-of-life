@@ -1,6 +1,6 @@
 package com.triad.gol.models
 
-fun Boolean.binary() = if(this) 1 else 0
+import com.triad.gol.toInt
 
 class Map(val width: Int, val height: Int) {
     val cells = Array(width * height) {
@@ -12,22 +12,24 @@ class Map(val width: Int, val height: Int) {
         else false
     }
 
+    private fun countNeighbours(x: Int, y: Int): Int {
+        return this[x - 1, y    ].toInt() +
+            this[x + 1, y    ].toInt() +
+            this[x - 1, y - 1].toInt() +
+            this[x + 1, y - 1].toInt() +
+            this[x - 1, y + 1].toInt() +
+            this[x + 1, y + 1].toInt() +
+            this[x    , y - 1].toInt() +
+            this[x    , y + 1].toInt()
+    }
+
     fun nextState() {
         cells.map {
             it.isAlive
         }.mapIndexed { index, value ->
             val y = index / width
             val x = index - y * width
-
-            val neighbours =
-                this[x - 1, y    ].binary() +
-                this[x + 1, y    ].binary() +
-                this[x - 1, y - 1].binary() +
-                this[x + 1, y - 1].binary() +
-                this[x - 1, y + 1].binary() +
-                this[x + 1, y + 1].binary() +
-                this[x    , y - 1].binary() +
-                this[x    , y + 1].binary()
+            val neighbours = countNeighbours(x, y)
 
             when (value) {
                 true -> neighbours in 2..3

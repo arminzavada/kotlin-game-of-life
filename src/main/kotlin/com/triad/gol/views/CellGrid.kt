@@ -13,25 +13,23 @@ class CellGrid : View() {
     override val root = hbox {
         alignment = Pos.CENTER
 
+        addClass(ApplicationStyle.cellGridContainer)
+
         vbox {
             alignment = Pos.CENTER
 
             datagrid(gameController.cells) {
+                usePrefSize = true
+                prefWidth = gameController.width * 22.0
+                prefHeight = gameController.height * 22.0
                 maxRows = gameController.height
                 maxCellsInRow = gameController.width
-                cellWidth = 28.0
-                cellHeight = 28.0
-                verticalCellSpacing = 1.0
-                horizontalCellSpacing = 1.0
-
-                alignment = Pos.CENTER
 
                 addClass(ApplicationStyle.cellGrid)
 
                 cellCache { cell ->
                     pane {
-                        useMaxHeight = true
-                        useMaxWidth = true
+                        useMaxSize = true
 
                         addClass(ApplicationStyle.cellClass)
                         toggleClass(ApplicationStyle.aliveCellClass, cell.isAliveProperty)

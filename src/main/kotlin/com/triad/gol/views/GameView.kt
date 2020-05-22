@@ -5,6 +5,6 @@ import tornadofx.*
 class GameView : View("Game of Life") {
     override val root = borderpane {
         center(CellGrid::class)
-        bottom(PlayController::class)
+        right(PlayController::class)
     }
 }
