@@ -3,6 +3,7 @@ buildscript {
     ext.tornadofx_version = "1.7.20"
 
     repositories {
+        mavenLocal()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -23,12 +24,14 @@ apply plugin: "kotlin"
 
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "no.tornado:tornadofx:$tornadofx_version"
+    compile 'de.jensd:fontawesomefx:8.9'
 }
 
 compileKotlin {
