@@ -21,6 +21,7 @@ fun EventTarget.iconButton(icon: FontAwesomeIcon, op: Button.() -> Unit = {}) = 
 
     op(this)
 }
+
 fun EventTarget.iconToggleButton(
     icon: FontAwesomeIcon,
     group: ToggleGroup? = getToggleGroup(),

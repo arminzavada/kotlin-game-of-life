@@ -1,17 +1,38 @@
 package com.triad.gol.views
 
-import com.triad.gol.controllers.CellController
+import com.triad.gol.controllers.GameController
 import javafx.application.Platform
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Pos
+import javafx.scene.control.TextFormatter
 import tornadofx.*
 
 class MainMenuView : View("Triad - Game of Life") {
-    private val cellController: CellController by inject()
-
+    private val gameController: GameController by inject()
     private val model = object : ViewModel() {
         val width = bind { SimpleIntegerProperty(5) }
         val height = bind { SimpleIntegerProperty(5) }
+    }
+    private val numberFilter: (TextFormatter.Change) -> Boolean = {
+//        if (it.isDeleted && it.controlNewText.isEmpty()) {
+//            it.text = "0"
+//            it.
+//            it.caretPosition = 1
+//            it.anchor = 1
+//        } else if (it.isAdded && it.controlText == "0") {
+//            it.text = it.controlNewText.drop(1)
+//            it.caretPosition = 1
+//            it.anchor = 1
+//        }
+
+        !it.isAdded || it.controlNewText.isInt()
+    }
+    private val numberValidator: ValidationContext.(String?) -> ValidationMessage? = {
+        when {
+            it?.isInt() == false -> error("The field must be a number")
+            it?.toInt() !in 5..50 -> error("The field must be in the range of 5..50")
+            else -> null
+        }
     }
 
     override val root = vbox {
@@ -25,16 +46,10 @@ class MainMenuView : View("Triad - Game of Life") {
             fieldset("Map settings") {
                 field("Width") {
                     textfield(model.width) {
-                        validator {
-                            when {
-                                it?.isInt() == false -> error("The field must be a number")
-                                it?.toInt() !in 5..30 -> error("The field must be in the range of 5..30")
-                                else -> null
-                            }
-                        }
-                        filterInput {
-                            it.controlNewText.isEmpty() || it.controlNewText.isInt()
-                        }
+                        promptText = "The width of the map, 5..50"
+
+                        validator(ValidationTrigger.OnChange(), numberValidator)
+                        filterInput(numberFilter)
                         whenDocked {
                             requestFocus()
                         }
@@ -42,13 +57,10 @@ class MainMenuView : View("Triad - Game of Life") {
                 }
                 field("Height") {
                     textfield(model.height) {
-                        validator {
-                            when {
-                                it?.isInt() == false -> error("The field must be a number")
-                                it?.toInt() !in 5..30 -> error("The field must be in the range of 5..30")
-                                else -> null
-                            }
-                        }
+                        promptText = "The height of the map, 5..50"
+
+                        validator(ValidationTrigger.OnChange(), numberValidator)
+                        filterInput(numberFilter)
                     }
                 }
             }
@@ -60,7 +72,7 @@ class MainMenuView : View("Triad - Game of Life") {
 
                     enableWhen(model.valid)
                     action {
-                        cellController.clear(model.width.value.toInt(), model.height.value.toInt())
+                        gameController.clear(model.width.value.toInt(), model.height.value.toInt())
                         replaceWith<GameView>()
                     }
                 }

@@ -10,7 +10,6 @@ class ApplicationStyle : Stylesheet() {
         val cellClass by cssclass()
         val icon by cssclass()
         val iconButton by cssclass()
-        val iconToggleButton by cssclass()
         val title by cssid()
         val header by cssclass()
         val footer by cssclass()
