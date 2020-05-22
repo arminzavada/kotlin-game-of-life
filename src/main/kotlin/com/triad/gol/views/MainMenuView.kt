@@ -11,21 +11,10 @@ import tornadofx.*
 class MainMenuView : View("Triad - Game of Life") {
     private val gameController: GameController by inject()
     private val model = object : ViewModel() {
-        val width = bind { SimpleIntegerProperty(5) }
-        val height = bind { SimpleIntegerProperty(5) }
+        val width = bind { SimpleIntegerProperty(20) }
+        val height = bind { SimpleIntegerProperty(20) }
     }
     private val numberFilter: (TextFormatter.Change) -> Boolean = {
-//        if (it.isDeleted && it.controlNewText.isEmpty()) {
-//            it.text = "0"
-//            it.
-//            it.caretPosition = 1
-//            it.anchor = 1
-//        } else if (it.isAdded && it.controlText == "0") {
-//            it.text = it.controlNewText.drop(1)
-//            it.caretPosition = 1
-//            it.anchor = 1
-//        }
-
         !it.isAdded || it.controlNewText.isInt()
     }
     private val numberValidator: ValidationContext.(String?) -> ValidationMessage? = {

@@ -2,6 +2,7 @@ package com.triad.gol.controllers
 
 import com.triad.gol.models.Cell
 import com.triad.gol.models.Map
+import com.triad.gol.models.Pattern
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -20,6 +21,13 @@ class GameController : Controller() {
             field = value
         }
 
+    val patterns = FXCollections.observableArrayList(
+        Pattern("Normal", 1, 1, true, listOf(true)),
+        Pattern("Block", 2, 2, false, listOf(true, true, true, true)),
+        Pattern("Blinker", 3, 3, false, listOf(false, false, false, true, true, true, false, false, false)),
+        Pattern("Glider", 3, 3, false, listOf(false, true, false, false, false, true, true, true, true))
+    )
+
     val width
         get() = map.width
     val height
@@ -33,6 +41,9 @@ class GameController : Controller() {
 
     val isPausedProperty = SimpleBooleanProperty()
     var isPaused by isPausedProperty
+
+    val patternProperty = SimpleObjectProperty(patterns.first())
+    var pattern by patternProperty
 
     val cells = FXCollections.observableArrayList<Cell>()
 
@@ -49,6 +60,21 @@ class GameController : Controller() {
         }
 
         isPausedProperty.bind(isRunningProperty.not()) // I had to add the isPausedProperty, because isRunningProperty.not() did not return a valid observable property. It might be a bug, I don't know.
+    }
+
+    fun place(cellX: Int, cellY: Int) {
+        val deltaX = cellX - pattern.width / 2
+        val deltaY = cellY - pattern.height / 2
+
+        for (x in 0 until pattern.width) {
+            for (y in 0 until pattern.width) {
+                if (pattern.flip) {
+                    map[x + deltaX, y + deltaY] = map[x + deltaX, y + deltaY] xor pattern[x, y]
+                } else {
+                    map[x + deltaX, y + deltaY] = pattern[x, y]
+                }
+            }
+        }
     }
 
     fun clear() {

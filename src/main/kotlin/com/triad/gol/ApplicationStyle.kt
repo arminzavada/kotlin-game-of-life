@@ -73,6 +73,21 @@ class ApplicationStyle : Stylesheet() {
                 spacing = 10.px
                 alignment = Pos.CENTER
             }
+
+            listView {
+                backgroundColor += c("transparent")
+                listCell {
+                    backgroundColor += c("transparent")
+
+                    and(hover) {
+                        backgroundColor += c("#00000011")
+                    }
+
+                    and(selected) {
+                        backgroundColor += c("#0093ff")
+                    }
+                }
+            }
         }
     }
 }

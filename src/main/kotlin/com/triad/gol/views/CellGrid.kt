@@ -35,7 +35,7 @@ class CellGrid : View() {
                         toggleClass(ApplicationStyle.aliveCellClass, cell.isAliveProperty)
 
                         addEventHandler(MouseEvent.MOUSE_CLICKED) {
-                            cell.isAlive = !cell.isAlive
+                            gameController.place(cell.x, cell.y)
                         }
                     }
                 }

@@ -56,5 +56,7 @@ class PlayController : View("My View") {
                 tooltip("Play")
             }
         }
+
+        add<PatternList>()
     }
 }
