@@ -4,15 +4,20 @@ import tornadofx.*
 
 class ApplicationStyle : Stylesheet() {
     companion object {
-        val aliveCell by cssclass()
+        val cellGrid by cssclass()
+        val aliveCellClass by cssclass()
+        val cellClass by cssclass()
     }
 
     init {
-        button {
-            backgroundColor += c("#ffffff")
+        cellGrid {
+            backgroundColor += c("#000")
         }
-        aliveCell {
-            backgroundColor += c("#000000")
+        cellClass {
+            backgroundColor += c("#555")
+        }
+        aliveCellClass {
+            backgroundColor += c("#333")
         }
     }
 }

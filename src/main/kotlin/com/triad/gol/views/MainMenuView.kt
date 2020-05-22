@@ -54,14 +54,14 @@ class MainMenuView : View("Triad - Game of Life") {
             }
             vbox(spacing = 10.0) {
                 alignment = Pos.CENTER
+
                 button("Start") {
                     isDefaultButton = true
 
                     enableWhen(model.valid)
-
                     action {
                         cellController.clear(model.width.value.toInt(), model.height.value.toInt())
-                        replaceWith<CellGrid>()
+                        replaceWith<GameView>()
                     }
                 }
                 button("Exit") {
