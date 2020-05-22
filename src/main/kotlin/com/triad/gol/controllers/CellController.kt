@@ -6,18 +6,15 @@ import javafx.collections.FXCollections
 import tornadofx.*
 
 class CellController : Controller() {
-    val widthProperty = SimpleIntegerProperty()
+    val widthProperty = SimpleIntegerProperty(5)
     var width by widthProperty
 
-    val heightProperty = SimpleIntegerProperty()
+    val heightProperty = SimpleIntegerProperty(5)
     var height by heightProperty
 
     val cells = FXCollections.observableArrayList<Cell>()
 
-    fun clear(width: Int, height: Int) {
-        this.width = width;
-        this.height = height;
-
+    fun clear() {
         cells.clear()
 
         repeat(width * height) {
